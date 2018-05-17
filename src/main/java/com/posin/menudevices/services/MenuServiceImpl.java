@@ -3,13 +3,11 @@ package com.posin.menudevices.services;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.posin.menudevices.Dishes;
+import com.posin.menudevices.constant.Dishes;
+import com.posin.menudevices.ICallback;
 import com.posin.menudevices.IMenuManage;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Greetty on 2018/5/17.
@@ -27,38 +25,31 @@ public class MenuServiceImpl extends IMenuManage.Stub {
     }
 
     @Override
-    public void setMenu(String name) throws RemoteException {
-        Log.e(TAG, "name: " + name);
+    public void init(int maxShowItem, boolean isChinese, ICallback callback) throws RemoteException {
+        Log.e(TAG, "maxShowItem: " + maxShowItem);
+        Log.e(TAG, "isChinese: " + isChinese);
     }
 
     @Override
-    public String setListMenuList(List<String> listNames) throws RemoteException {
-        Log.e(TAG, "setListMenuList ...............");
-
-
-        for (String name : listNames) {
-            Log.e(TAG, "setListMenuList name: " + name);
-
+    public void sendMenu(List<Dishes> listDishes, double sum) throws RemoteException {
+        for (Dishes dishes : listDishes) {
+            Log.e(TAG, "dishes message === " + dishes.toString());
         }
-        return "Greetty182612";
+        Log.e(TAG, "sum message： " + sum);
     }
 
     @Override
-    public void setMenuMap(Map menuMaps) throws RemoteException {
+    public void pay(double sum, double discountSum, double alreadyPay,
+                    double giveChange) throws RemoteException {
 
-
-
-        for (Object o : menuMaps.keySet()) {
-            Log.e(TAG, "map key name: " + o);
-            Log.e(TAG, "map values: " + menuMaps.get(o));
-        }
-
-
+        Log.e(TAG, "sum: " + sum + " discountSum: " + discountSum +
+                " alreadyPay: " + alreadyPay     + " giveChange: "+giveChange);
     }
 
     @Override
-    public void sendDish(Dishes dishes) throws RemoteException {
-        Log.e(TAG, "dishes is === "+dishes.toString());
+    public void clearMenu() throws RemoteException {
+        Log.e(TAG, "清空菜单栏数据，哈哈哈");
     }
+
 
 }
