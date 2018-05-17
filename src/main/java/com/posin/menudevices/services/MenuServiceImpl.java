@@ -5,7 +5,10 @@ import android.util.Log;
 
 import com.posin.menudevices.IMenuManage;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Greetty on 2018/5/17.
@@ -30,11 +33,26 @@ public class MenuServiceImpl extends IMenuManage.Stub {
     @Override
     public String setListMenuList(List<String> listNames) throws RemoteException {
         Log.e(TAG, "setListMenuList ...............");
-        for (String name:listNames){
-            Log.e(TAG, "setListMenuList name: "+name);
+
+
+        for (String name : listNames) {
+            Log.e(TAG, "setListMenuList name: " + name);
 
         }
         return "Greetty182612";
+    }
+
+    @Override
+    public void setMenuMap(Map menuMaps) throws RemoteException {
+
+
+
+        for (Object o : menuMaps.keySet()) {
+            Log.e(TAG, "map key name: " + o);
+            Log.e(TAG, "map values: " + menuMaps.get(o));
+        }
+
+
     }
 
 }
