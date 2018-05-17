@@ -1,6 +1,8 @@
 // IMenuManage.aidl
 package com.posin.menudevices;
 
+import com.posin.menudevices.Dishes;
+
 // Declare any non-default types here with import statements
 
 interface IMenuManage {
@@ -16,4 +18,6 @@ interface IMenuManage {
      String setListMenuList(in List<String> listNames);
 
      void setMenuMap(in Map menuMaps);
+
+     void sendDish(in Dishes dishes);
 }

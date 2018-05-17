@@ -3,6 +3,7 @@ package com.posin.menudevices.services;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.posin.menudevices.Dishes;
 import com.posin.menudevices.IMenuManage;
 
 import java.util.Iterator;
@@ -53,6 +54,11 @@ public class MenuServiceImpl extends IMenuManage.Stub {
         }
 
 
+    }
+
+    @Override
+    public void sendDish(Dishes dishes) throws RemoteException {
+        Log.e(TAG, "dishes is === "+dishes.toString());
     }
 
 }
