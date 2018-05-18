@@ -3,6 +3,7 @@ package com.posin.menudevices.services;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.posin.menudevices.command.MenuCommandManage;
 import com.posin.menudevices.constant.Dishes;
 import com.posin.menudevices.ICallback;
 import com.posin.menudevices.IMenuManage;
@@ -26,29 +27,56 @@ public class MenuServiceImpl extends IMenuManage.Stub {
 
     @Override
     public void init(int maxShowItem, boolean isChinese, ICallback callback) throws RemoteException {
-        Log.e(TAG, "maxShowItem: " + maxShowItem);
-        Log.e(TAG, "isChinese: " + isChinese);
+        Log.d(TAG, "maxShowItem: " + maxShowItem);
+        Log.d(TAG, "isChinese: " + isChinese);
+        if (callback==null){
+            Log.d(TAG, "callback ==null ");
+        }else{
+            Log.d(TAG, "callback !=null ");
+        }
+        try {
+            MenuCommandManage.getInstance().init(maxShowItem,isChinese,callback);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void sendMenu(List<Dishes> listDishes, double sum) throws RemoteException {
-        for (Dishes dishes : listDishes) {
-            Log.e(TAG, "dishes message === " + dishes.toString());
+
+        Log.d(TAG, "sendMenu sum message： " + sum);
+        try {
+            MenuCommandManage.getInstance().sendMenu(listDishes,sum);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Log.e(TAG, "sum message： " + sum);
     }
 
     @Override
     public void pay(double sum, double discountSum, double alreadyPay,
                     double giveChange) throws RemoteException {
 
-        Log.e(TAG, "sum: " + sum + " discountSum: " + discountSum +
+        Log.d(TAG, "sum: " + sum + " discountSum: " + discountSum +
                 " alreadyPay: " + alreadyPay     + " giveChange: "+giveChange);
+
+        try {
+            MenuCommandManage.getInstance().pay(discountSum,sum,alreadyPay,giveChange);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void clearMenu() throws RemoteException {
-        Log.e(TAG, "清空菜单栏数据，哈哈哈");
+        Log.d(TAG, "清空菜单栏数据 ...");
+
+        try {
+            MenuCommandManage.getInstance().clearDishes();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 

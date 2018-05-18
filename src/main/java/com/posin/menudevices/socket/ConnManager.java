@@ -2,6 +2,7 @@ package com.posin.menudevices.socket;
 
 import android.util.Log;
 
+import com.posin.menudevices.ICallback;
 import com.posin.menudevices.utils.Json;
 import com.posin.menudevices.utils.ThreadManage;
 
@@ -40,8 +41,13 @@ public class ConnManager {
      * 连接广告系统
      *
      */
-    public void connectServer() {
-        new Thread(new SocketConnection()).start();
+    public void connectServer(ICallback callback) throws Exception {
+        if (socket != null && !socket.isClosed()) {
+            callback.success();
+            Log.e(TAG, "socket != null ,No need to initialize ... ");
+        }else{
+            new Thread(new SocketConnection(callback)).start();
+        }
     }
 
     /**
@@ -82,8 +88,8 @@ public class ConnManager {
                         Log.d(TAG, "send: 发送完成:" + msg);
                     } catch (IOException e) {
                         Log.d(TAG, "socket 断开连接 ！");
+                        socket=null;
                         e.printStackTrace();
-
                     }
                 } else {
                     Log.e(TAG, "socket ==null or socket is closed");

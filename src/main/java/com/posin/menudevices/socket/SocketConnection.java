@@ -3,6 +3,7 @@ package com.posin.menudevices.socket;
 import android.util.Log;
 
 
+import com.posin.menudevices.ICallback;
 import com.posin.menudevices.global.AppConfig;
 
 import java.io.IOException;
@@ -18,11 +19,12 @@ public class SocketConnection implements Runnable {
     private static final String TAG = "SocketConnection";
 
     private Socket socket = null;
-//    private Callback mConnectCallback;
-//
-//    public SocketConnection(Callback connectCallback) {
-//        this.mConnectCallback = connectCallback;
-//    }
+    private ICallback mCallback;
+
+    public SocketConnection(ICallback callback) {
+        this.mCallback = callback;
+    }
+
 
     @Override
     public void run() {
@@ -32,13 +34,16 @@ public class SocketConnection implements Runnable {
         }
     }
 
-    private void conn(){
+    private void conn() {
         try {
             socket = new Socket(AppConfig.TARGET_DISPLAY_ADDRESS, AppConfig.TARGET_DISPLAY_PORT);
-            Log.d(TAG, "conn: 连接socket成功");
+            Log.e(TAG, "conn: 连接socket成功");
+            mCallback.success();
+
         } catch (Exception e) {
             try {
-                Log.d(TAG, "conn: socket连接异常！");
+                Log.e(TAG, "conn: socket连接异常！"+e.getMessage());
+                mCallback.failure();
                 e.printStackTrace();
             } catch (Exception e1) {
                 e1.printStackTrace();
