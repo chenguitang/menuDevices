@@ -75,7 +75,7 @@ public class MenuCommandManage {
         String[][] addMenuCommand = ArrayUtils.mergeTwoDimArrayVer(defaultUiCommand, menuCommand);
 
         ConnManager.getConnManager().sendViewCode(addMenuCommand);
-        Thread.sleep(30);
+        Thread.sleep(10);
 //        endSendTime = System.currentTimeMillis();
     }
 

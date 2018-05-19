@@ -24,6 +24,8 @@ public class ConnManager {
     private static final String TAG = "ConnManager";
     private static ConnManager connManager = null;
     private Socket socket = null;
+    private SocketConnection mSocketConnection;
+
 
     /**
      * 获取ConnManager实例
@@ -39,14 +41,14 @@ public class ConnManager {
 
     /**
      * 连接广告系统
-     *
      */
     public void connectServer(ICallback callback) throws Exception {
         if (socket != null && !socket.isClosed()) {
             callback.success();
             Log.e(TAG, "socket != null ,No need to initialize ... ");
-        }else{
-            new Thread(new SocketConnection(callback)).start();
+        } else {
+            mSocketConnection = new SocketConnection(callback);
+            new Thread(mSocketConnection).start();
         }
     }
 
@@ -85,10 +87,14 @@ public class ConnManager {
                                 formatCommand(commands)) + "#&*@";
                         outputStream.write(msg.getBytes());
                         outputStream.flush();
+
+                        if (mSocketConnection != null) { //优化最后发送时间，减少心跳包的频率
+                            mSocketConnection.setLastActTime(System.currentTimeMillis());
+                        }
                         Log.d(TAG, "send: 发送完成:" + msg);
                     } catch (IOException e) {
                         Log.d(TAG, "socket 断开连接 ！");
-                        socket=null;
+                        socket = null;
                         e.printStackTrace();
                     }
                 } else {

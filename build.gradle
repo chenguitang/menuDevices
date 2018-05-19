@@ -8,8 +8,8 @@ android {
         applicationId "com.posin.menudevices"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 1
-        versionName "MenuDevice_Beat_1.0"
+        versionCode 2
+        versionName "MenuDevice_Beat_1.0.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
